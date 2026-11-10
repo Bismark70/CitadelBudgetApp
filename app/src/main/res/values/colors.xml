@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="citadel_navy">#0B1F3A</color>
+    <color name="citadel_blue">#1D4ED8</color>
+    <color name="citadel_teal">#0D9488</color>
+    <color name="citadel_gold">#F59E0B</color>
+    <color name="white">#FFFFFF</color>
+</resources>
