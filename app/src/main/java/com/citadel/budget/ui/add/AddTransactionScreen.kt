@@ -31,6 +31,7 @@ import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedButton
 import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.AlertDialog
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -130,6 +131,28 @@ class AddTransactionViewModel(
     fun onCategoryChange(id: Long) { categoryId.value = id }
     fun onDateChange(day: Long) { epochDay.value = day }
 
+    fun addCategory(name: String, bucket: Bucket, onAdded: (Long) -> Unit) {
+        val trimmed = name.trim()
+        if (trimmed.isEmpty()) return
+        viewModelScope.launch {
+            val id = c.db.categoryDao().insert(
+                CategoryEntity(
+                    name = trimmed,
+                    bucket = bucket,
+                    icon = "custom",
+                    colorArgb = when (bucket) {
+                        Bucket.NEEDS -> 0xFF2563EB
+                        Bucket.WANTS -> 0xFFF59E0B
+                        Bucket.SAVINGS -> 0xFF059669
+                        Bucket.INCOME -> 0xFF64748B
+                    },
+                    isDefault = false
+                )
+            )
+            onAdded(id)
+        }
+    }
+
     fun valid(): Boolean =
         MoneyMath.parseCents(amount.value) != null && categoryId.value != null
 
@@ -192,6 +215,8 @@ fun AddTransactionScreen(container: AppContainer, txId: Long, onDone: () -> Unit
 
     val haptic = LocalHapticFeedback.current
     var showDatePicker by remember { mutableStateOf(false) }
+    var addCategoryBucket by remember { mutableStateOf<Bucket?>(null) }
+    var newCategoryName by remember { mutableStateOf("") }
 
     Scaffold(
         topBar = {
@@ -302,6 +327,15 @@ fun AddTransactionScreen(container: AppContainer, txId: Long, onDone: () -> Unit
                                     Spacer(Modifier.weight(1f))
                                 }
                             }
+                            OutlinedButton(
+                                onClick = {
+                                    newCategoryName = ""
+                                    addCategoryBucket = bucket
+                                },
+                                modifier = Modifier.padding(top = 6.dp)
+                            ) {
+                                Text("＋ Add custom label")
+                            }
                         }
                     }
                 }
@@ -368,6 +402,39 @@ fun AddTransactionScreen(container: AppContainer, txId: Long, onDone: () -> Unit
         ) {
             DatePicker(state = pickerState)
         }
+    }
+
+    addCategoryBucket?.let { bucket ->
+        AlertDialog(
+            onDismissRequest = { addCategoryBucket = null },
+            title = { Text("Add custom label") },
+            text = {
+                Column(verticalArrangement = Arrangement.spacedBy(8.dp)) {
+                    Text("This label will be added to ${bucketLabel(bucket)}.")
+                    OutlinedTextField(
+                        value = newCategoryName,
+                        onValueChange = { newCategoryName = it.take(30) },
+                        label = { Text("Label name") },
+                        singleLine = true,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+            },
+            confirmButton = {
+                TextButton(
+                    enabled = newCategoryName.trim().isNotEmpty(),
+                    onClick = {
+                        vm.addCategory(newCategoryName, bucket) { id ->
+                            vm.onCategoryChange(id)
+                            addCategoryBucket = null
+                        }
+                    }
+                ) { Text("Add") }
+            },
+            dismissButton = {
+                TextButton(onClick = { addCategoryBucket = null }) { Text("Cancel") }
+            }
+        )
     }
 }
 
