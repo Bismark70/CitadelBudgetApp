@@ -72,6 +72,7 @@ import com.citadel.budget.data.UserSettings
 import com.citadel.budget.ui.components.ConfirmDialog
 import com.citadel.budget.ui.components.SectionTitle
 import com.citadel.budget.util.Fmt
+import com.citadel.budget.util.SupportedCurrencies
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.SharingStarted
 import kotlinx.coroutines.flow.first
@@ -146,11 +147,6 @@ class SettingsViewModel(private val c: AppContainer) : ViewModel() {
         fun factory(c: AppContainer) = viewModelFactory { initializer { SettingsViewModel(c) } }
     }
 }
-
-private val currencyList = listOf(
-    "USD", "EUR", "GBP", "CAD", "AUD", "JPY", "CNY",
-    "INR", "NGN", "KES", "ZAR", "PHP", "BRL", "MXN", "IDR"
-)
 
 private data class BookRef(val title: String, val author: String, val took: String)
 
@@ -437,7 +433,7 @@ fun SettingsScreen(container: AppContainer, onWiped: () -> Unit, onBack: () -> U
                     Modifier.verticalScroll(rememberScrollState()),
                     verticalArrangement = Arrangement.spacedBy(2.dp)
                 ) {
-                    currencyList.forEach { code ->
+                    SupportedCurrencies.codes.forEach { code ->
                         TextButton(
                             onClick = {
                                 vm.setCurrency(code)

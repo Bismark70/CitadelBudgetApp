@@ -50,9 +50,8 @@ import com.citadel.budget.domain.MoneyMath
 import com.citadel.budget.domain.Wisdom
 import com.citadel.budget.ui.theme.CitadelColors
 import com.citadel.budget.util.Fmt
+import com.citadel.budget.util.SupportedCurrencies
 import kotlinx.coroutines.launch
-
-private val currencyChoices = listOf("USD", "EUR", "GBP", "CAD", "INR", "NGN", "PHP", "KES", "ZAR", "BRL")
 
 @Composable
 fun OnboardingScreen(container: AppContainer, onDone: () -> Unit) {
@@ -267,7 +266,7 @@ private fun IncomePage(
                 .horizontalScroll(rememberScrollState()),
             horizontalArrangement = Arrangement.spacedBy(8.dp)
         ) {
-            currencyChoices.forEach { code ->
+            SupportedCurrencies.codes.forEach { code ->
                 FilterChip(
                     selected = currency == code,
                     onClick = { onCurrencyChange(code) },

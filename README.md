@@ -29,7 +29,7 @@ savings-goal builder and money-health coach — in one small, private app.
 | 🔒 **Citadel Gate** | Optional 4-digit PIN lock (salted SHA-256, stored locally) |
 | 📤 **CSV export** | Share your full transaction history from the Settings screen |
 | 🌗 **Dark mode** | System / Light / Dark |
-| 🌍 **15 currencies** | USD, EUR, GBP, CAD, AUD, JPY, CNY, INR, NGN, KES, ZAR, PHP, BRL, MXN, IDR |
+| 🌍 **28 currencies** | USD, EUR, GBP, CAD, AUD, JPY, CNY, INR, GHS, NGN, KES, ZAR, UGX, TZS, RWF, EGP, AED, SAR, CHF, SEK, NOK, DKK, PLN, TRY, PHP, BRL, MXN, IDR |
 
 ### 100% offline & private by design
 The manifest declares **no `INTERNET` permission at all**. There is no analytics,
