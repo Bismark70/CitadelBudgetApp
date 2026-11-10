@@ -327,15 +327,15 @@ fun AddTransactionScreen(container: AppContainer, txId: Long, onDone: () -> Unit
                                     Spacer(Modifier.weight(1f))
                                 }
                             }
-                            OutlinedButton(
-                                onClick = {
-                                    newCategoryName = ""
-                                    addCategoryBucket = bucket
-                                },
-                                modifier = Modifier.padding(top = 6.dp)
-                            ) {
-                                Text("＋ Add custom label")
-                            }
+                        }
+                        OutlinedButton(
+                            onClick = {
+                                newCategoryName = ""
+                                addCategoryBucket = bucket
+                            },
+                            modifier = Modifier.padding(top = 6.dp)
+                        ) {
+                            Text("＋ Add custom label")
                         }
                     }
                 }
