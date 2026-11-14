@@ -1,6 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
+<!-- Pre-Android-12 launch splash: white backdrop + the FULL Citadel Budget logo
+     (shield, wordmark and "Track. Plan. Grow." tagline), matching the new brand. -->
 <layer-list xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@color/citadel_navy" />
+    <item android:drawable="@color/white" />
     <item android:gravity="center">
         <bitmap
             android:src="@drawable/splash_logo"

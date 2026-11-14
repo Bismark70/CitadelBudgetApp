@@ -7,8 +7,12 @@
         <item name="android:windowLightStatusBar">false</item>
     </style>
 
+    <!-- Launch splash (Android 12+): the system shows the app ICON (shield only) on a
+         white backdrop; the moment the app takes over, MainActivity shows the FULL
+         logo with labels for a seamless white-on-white branded opening. -->
     <style name="Theme.CitadelBudget.Splash" parent="Theme.CitadelBudget">
-        <item name="android:windowSplashScreenBackground">#0B1F3A</item>
+        <item name="android:windowSplashScreenBackground">#FFFFFF</item>
         <item name="android:windowSplashScreenAnimatedIcon">@mipmap/ic_launcher</item>
+        <item name="android:windowLightStatusBar">true</item>
     </style>
 </resources>
